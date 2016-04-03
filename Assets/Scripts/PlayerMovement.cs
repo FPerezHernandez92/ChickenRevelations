@@ -61,21 +61,23 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void animAdmin(){
-		/*if((CrossPlatformInputManager.GetAxis("Horizontal") != 0 || CrossPlatformInputManager.GetAxis("Vertical") != 0) ||
-			(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)){
-			anim.SetBool("Walk", true);
+		if((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)){
+			
 
-			if(CrossPlatformInputManager.GetButton("Yellow") || Input.GetButton("Run")){
-				if(Input.GetButton("Run"))
-					anim.SetBool("Run", true);
+			if (Input.GetButton ("Run")) {
+				anim.SetBool ("Run", true);
+				anim.SetBool("Walk", false);
+			} else {
+				anim.SetBool ("Run", false);
+				anim.SetBool("Walk", true);
 			}
-			else
-				anim.SetBool("Run", false);
 
 		}
 		else{
 			anim.SetBool("Walk", false);
 			anim.SetBool("Run", false);
-		}*/
+		}
+
+		Debug.Log (anim);
 	}
 }

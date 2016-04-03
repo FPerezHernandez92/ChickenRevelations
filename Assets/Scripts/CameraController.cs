@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour {
 		offset3 = new Vector3(offset.x, offset.y, offset.z);
 
 		transform.position = player.transform.position + offset;
+		//this.transform.rotation = new Vector3 (-30f,0f,0f);
 
 	}
 	
@@ -30,7 +31,7 @@ public class CameraController : MonoBehaviour {
 		}
 		else{
 			if(offset2 != offset){
-				offset2 -= new Vector3(0, (float)0.4, (float)0.8);
+				offset2 -= new Vector3(0, (float)0.8, (float)0.8);
 			}
 		}
 
@@ -44,7 +45,7 @@ public class CameraController : MonoBehaviour {
 		posCamera.x = -(transform.parent.position.x - transform.position.x);
 		posCamera.y = -(transform.parent.position.y - transform.position.y);
 		posCamera.z = -(transform.parent.position.z - transform.position.z);
-	
+		
 		return posCamera;
 	}
 }
