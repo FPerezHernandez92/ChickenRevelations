@@ -88,12 +88,14 @@
      <Compile Include="Assets\Jurassic Pack\-Demo\demoworld\MainCam.cs" />
      <Compile Include="Assets\Jurassic Pack\-Demo\demoworld\Water\Water.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Contrincante.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
      <None Include="Assets\Fantasy Skybox FREE\Readme.txt" />
      <None Include="Assets\Jurassic Pack\Readme.txt" />
      <None Include="Assets\Fantasy Skybox FREE\Fog and Ambient reference.txt" />
      <None Include="Assets\Jurassic Pack\-Demo\demoworld\Water\FXWaterPro.shader" />
      <None Include="Assets\GUI Animator\GUI Animator FREE\Readme.txt" />
+     <None Include="Assets\Horse\SoftAlpha.shader" />
      <None Include="Assets\PBS Materials Variety Pack\readme.txt" />
      <None Include="Assets\GE Common Assets\Readme.txt" />
      <None Include="Assets\GUI Animator\GUI Animator FREE\!How to.txt" />
