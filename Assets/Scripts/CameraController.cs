@@ -32,7 +32,6 @@ public class CameraController : MonoBehaviour {
 				//offset2 -= new Vector3(0, (float)0.8, (float)0.8);
 			}
 		}
-		print ("HOla paco" + offset2);
 		transform.position = player.transform.position + offset2;
 		transform.LookAt(player.transform);
 	}
