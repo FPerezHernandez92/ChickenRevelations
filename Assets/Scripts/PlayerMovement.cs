@@ -8,7 +8,11 @@ public class PlayerMovement : MonoBehaviour {
 	public int vidaPersonaje;
 	private CharacterController ccontroller;
 	private Animator anim;
-	//private bool atacar;
+	private bool atacar;
+	private int contador_tiempo;
+	private NavMeshAgent navmes;
+	private GameObject contr1;
+	private float distancia;
 
 	void Start(){
 		//Manejo del personaje
@@ -16,7 +20,11 @@ public class PlayerMovement : MonoBehaviour {
 		//Sistema de animacion
 		anim = gameObject.GetComponentInChildren<Animator>();
 		vidaPersonaje = 300;
-		//atacar = false;
+		atacar = false;
+		contador_tiempo = 0;
+		navmes = gameObject.GetComponent <NavMeshAgent> ();
+		contr1 = GameObject.Find ("zombie anime");
+		distancia = 1;
 	}
 
 	// Update is called once per frame
@@ -31,9 +39,22 @@ public class PlayerMovement : MonoBehaviour {
 		//Animacion
 		animAdmin();
 		ccontroller.Move(movement * Time.deltaTime); 
-		/*if(Input.GetKeyDown("e")){ 
+		if(Input.GetKeyDown("e")){ 
+			print ("ESTOY ATACANDO");
 			atacar = true;
-		} */
+		} 
+		if (atacar && contador_tiempo > 50) {
+			atacar = false;
+			contador_tiempo = 0;
+		}
+
+		float aux = Vector3.Distance (contr1.transform.position, gameObject.transform.position);
+		if (distancia > aux && atacar) {
+			contr1.GetComponent <Contrincante>().QuitarVidaContr();
+			int auxvida = contr1.GetComponent <Contrincante>().GetVidaContr();
+			print ("VIDA contr " + auxvida);
+		} 
+
 	}
 
 
@@ -48,18 +69,26 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void animAdmin(){
-		if((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)){
+		if ((Input.GetAxis ("Horizontal") != 0 || Input.GetAxis ("Vertical") != 0)) {
 			if (Input.GetButton ("Run")) {
 				anim.SetBool ("Run", true);
-				anim.SetBool("Walk", false);
+				anim.SetBool ("Walk", false);
+				anim.SetBool ("Atack", false);
 			} else {
 				anim.SetBool ("Run", false);
-				anim.SetBool("Walk", true);
+				anim.SetBool ("Walk", true);
+				anim.SetBool ("Atack", false);
 			}
+		} else if (atacar) {
+			anim.SetBool ("Atack", true);
+			anim.SetBool ("Run", false);
+			anim.SetBool ("Walk", false);
+			contador_tiempo++;
 		}
 		else{
 			anim.SetBool("Walk", false);
 			anim.SetBool("Run", false);
+			anim.SetBool ("Atack", false);
 		}
 
 		//Debug.Log (anim);

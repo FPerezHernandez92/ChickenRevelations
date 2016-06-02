@@ -8,6 +8,7 @@ public class Contrincante : MonoBehaviour {
 	private NavMeshAgent navmes;
 	private GameObject player;
 	private float distancia;
+	public int vidaContrincante;
 
 
 	// Use this for initialization
@@ -18,6 +19,7 @@ public class Contrincante : MonoBehaviour {
 		navmes = gameObject.GetComponent <NavMeshAgent>();
 		player = GameObject.Find ("Comp");
 		distancia = 2;
+		vidaContrincante = 200;
 	}
 
 	// Update is called once per frame
@@ -36,6 +38,8 @@ public class Contrincante : MonoBehaviour {
 		
 			}
 		}
+		if (vidaContrincante <= 0)
+			estado = 3;
 	}
 
 	private void animAdmin(){
@@ -43,16 +47,26 @@ public class Contrincante : MonoBehaviour {
 			animcontr.SetBool ("WalkC", false);
 			animcontr.SetBool ("WaitC", true);
 			animcontr.SetBool ("AtackC", false);
-		}
-		else if (estado == 1){
+		} else if (estado == 1) {
 			animcontr.SetBool ("WalkC", true);
 			animcontr.SetBool ("WaitC", false);
 			animcontr.SetBool ("AtackC", false);
-		}
-		else if (estado == 2) {
+		} else if (estado == 2) {
 			animcontr.SetBool ("WalkC", false);
 			animcontr.SetBool ("WaitC", false);
 			animcontr.SetBool ("AtackC", true);
+		} else if (estado == 3) {
+			animcontr.SetBool ("WalkC", false);
+			animcontr.SetBool ("WaitC", false);
+			animcontr.SetBool ("AtackC", false);
 		}
+	}
+
+	public void QuitarVidaContr(){
+		vidaContrincante--;
+	}
+
+	public int GetVidaContr(){
+		return vidaContrincante;
 	}
 }
