@@ -53,11 +53,13 @@
      <None Include="Assets\Toon Zombie S\TSF\Shaders\TSFOutline.shader" />
      <None Include="Assets\Toon Zombie S\TSF\Shaders\TSF.shader" />
      <None Include="Assets\Jurassic Pack\-Demo\demoworld\Water\FXWaterPro.shader" />
+     <None Include="Assets\Chibi Mummy\readme.txt" />
      <None Include="Assets\GUI Animator\GUI Animator FREE\Readme.txt" />
      <None Include="Assets\Horse\SoftAlpha.shader" />
      <None Include="Assets\PBS Materials Variety Pack\readme.txt" />
      <None Include="Assets\GE Common Assets\Readme.txt" />
      <None Include="Assets\GUI Animator\GUI Animator FREE\!How to.txt" />
+     <None Include="Assets\FelineGargoyle\readme_first.txt" />
  <Reference Include="Assembly-UnityScript">
  <HintPath>/Users/pacopollos/Dropbox/Uni/zGitHub/ProgramacionLudica/ChickenRevelations/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
  </Reference>

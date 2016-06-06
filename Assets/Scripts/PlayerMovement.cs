@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 	public float walkSpeed = 5;
@@ -13,22 +14,28 @@ public class PlayerMovement : MonoBehaviour {
 	private NavMeshAgent navmes;
 	private GameObject contr1;
 	private float distancia;
+	public int auxquitarvidaC;
 
 	void Start(){
 		//Manejo del personaje
 		ccontroller = GetComponent<CharacterController>();
 		//Sistema de animacion
 		anim = gameObject.GetComponentInChildren<Animator>();
-		vidaPersonaje = 300;
+		vidaPersonaje = 100;
 		atacar = false;
 		contador_tiempo = 0;
 		navmes = gameObject.GetComponent <NavMeshAgent> ();
 		contr1 = GameObject.Find ("zombie anime");
+
 		distancia = 1;
+		auxquitarvidaC = 0;
 	}
+
 
 	// Update is called once per frame
 	void FixedUpdate () {
+		setTextVida ();
+		
 		Vector3 movement = Vector3.zero;
 		//Solo si se encuentra en el suelo, sino se le aplica gravedad
 		if(ccontroller.isGrounded){
@@ -50,11 +57,14 @@ public class PlayerMovement : MonoBehaviour {
 
 		float aux = Vector3.Distance (contr1.transform.position, gameObject.transform.position);
 		if (distancia > aux && atacar) {
-			contr1.GetComponent <Contrincante>().QuitarVidaContr();
-			int auxvida = contr1.GetComponent <Contrincante>().GetVidaContr();
-			print ("VIDA contr " + auxvida);
-		} 
-
+			if (auxquitarvidaC == 7) {
+				contr1.GetComponent <Contrincante> ().QuitarVidaContr ();
+				int auxvida = contr1.GetComponent <Contrincante> ().GetVidaContr ();
+				print ("VIDA contr " + auxvida);
+				auxquitarvidaC = 0;
+			} 
+			auxquitarvidaC++;
+		}
 	}
 
 
@@ -69,6 +79,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void animAdmin(){
+		
 		if ((Input.GetAxis ("Horizontal") != 0 || Input.GetAxis ("Vertical") != 0)) {
 			if (Input.GetButton ("Run")) {
 				anim.SetBool ("Run", true);
@@ -98,7 +109,19 @@ public class PlayerMovement : MonoBehaviour {
 		vidaPersonaje--;
 	}
 
+	public void PonerVida(){
+		if (vidaPersonaje <= 80)
+			vidaPersonaje += 20;
+		else
+			vidaPersonaje = 100;
+	}
+
 	public int GetVida(){
 		return vidaPersonaje;
+	}
+
+	public void setTextVida(){
+		GameObject.Find("TextVida").GetComponent<Text>().text = vidaPersonaje.ToString();
+
 	}
 }

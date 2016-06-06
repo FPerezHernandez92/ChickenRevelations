@@ -9,6 +9,7 @@ public class Contrincante : MonoBehaviour {
 	private GameObject player;
 	private float distancia;
 	public int vidaContrincante;
+	public int auxquitarvida;
 
 
 	// Use this for initialization
@@ -17,9 +18,10 @@ public class Contrincante : MonoBehaviour {
 		animcontr = gameObject.GetComponentInChildren<Animator>();
 		animcontr.SetBool ("WaitC", true);
 		navmes = gameObject.GetComponent <NavMeshAgent>();
-		player = GameObject.Find ("Comp");
+		player = GameObject.Find ("mummy_rig");
 		distancia = 2;
-		vidaContrincante = 200;
+		vidaContrincante = 50;
+		auxquitarvida = 0;
 	}
 
 	// Update is called once per frame
@@ -31,16 +33,22 @@ public class Contrincante : MonoBehaviour {
 				float aux = Vector3.Distance (player.transform.position, gameObject.transform.position);
 				if (distancia > aux) {
 					estado = 2;
-					player.GetComponent <PlayerMovement> ().QuitarVida ();
-					int auxvida = player.GetComponent <PlayerMovement> ().GetVida ();
-					print ("VIDA " + auxvida);
+					if (auxquitarvida == 10) {
+						player.GetComponent <PlayerMovement> ().QuitarVida ();
+						int auxvida = player.GetComponent <PlayerMovement> ().GetVida ();
+						print ("VIDA " + auxvida);
+						auxquitarvida = 0;
+					}
+					auxquitarvida++;
 				} else {
 					estado = 1;
 			
 				}
 			}
-			if (vidaContrincante <= 0)
+			if (vidaContrincante <= 0) {
 				estado = 3;
+				player.GetComponent <PlayerMovement> ().PonerVida ();
+			}
 		}
 	}
 

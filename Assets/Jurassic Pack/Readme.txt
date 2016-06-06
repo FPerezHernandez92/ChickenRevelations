@@ -40,7 +40,7 @@ Jurassic Pack vol. 1
 Jurassic Pack vol. 2
 ------------------------------------------------------------------------------------------------------
 	Pachycephalosaurus
-	Argentinosaurus - coming soon !
+	Argentinosaurus
 	Carnotaurus - coming soon !
 	Gallimimus - coming soon !
 	Styracosaurus - coming soon !

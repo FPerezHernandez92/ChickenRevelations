@@ -45,6 +45,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Chibi Mummy\Scripts\anims_controls.cs" />
+     <Compile Include="Assets\Chibi Mummy\Scripts\control_script.cs" />
      <Compile Include="Assets\Cont.cs" />
      <Compile Include="Assets\Fantasy Skybox FREE\Demo\Scripts\GE_FantasySkyboxFREE_Demo.cs" />
      <Compile Include="Assets\Fantasy Skybox FREE\Demo\Scripts\GE_FantasySkyboxFREE_UIs.cs" />
@@ -86,8 +88,8 @@
      <Compile Include="Assets\GUI Animator\GUI Animator FREE\Demo (CSharp)\Scripts\GA_FREE_OpenOtherScene.cs" />
      <Compile Include="Assets\GUI Animator\GUI Animator FREE\Demo Basic (CSharp)\Scripts\GUIAnimatorFREEDemo.cs" />
      <Compile Include="Assets\Jurassic Pack\-Demo\comp_cs.cs" />
-     <Compile Include="Assets\Jurassic Pack\-Demo\demoworld\MainCam.cs" />
      <Compile Include="Assets\Jurassic Pack\-Demo\demoworld\Water\Water.cs" />
+     <Compile Include="Assets\Jurassic Pack\-Demo\demoworld\camera_cs.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Contrincante.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
@@ -97,11 +99,13 @@
      <None Include="Assets\Toon Zombie S\TSF\Shaders\TSFOutline.shader" />
      <None Include="Assets\Toon Zombie S\TSF\Shaders\TSF.shader" />
      <None Include="Assets\Jurassic Pack\-Demo\demoworld\Water\FXWaterPro.shader" />
+     <None Include="Assets\Chibi Mummy\readme.txt" />
      <None Include="Assets\GUI Animator\GUI Animator FREE\Readme.txt" />
      <None Include="Assets\Horse\SoftAlpha.shader" />
      <None Include="Assets\PBS Materials Variety Pack\readme.txt" />
      <None Include="Assets\GE Common Assets\Readme.txt" />
      <None Include="Assets\GUI Animator\GUI Animator FREE\!How to.txt" />
+     <None Include="Assets\FelineGargoyle\readme_first.txt" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
