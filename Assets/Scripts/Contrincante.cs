@@ -10,6 +10,8 @@ public class Contrincante : MonoBehaviour {
 	private float distancia;
 	public int vidaContrincante;
 	public int auxquitarvida;
+	public int contadortiempomuerto;
+	public int siguientetiempomuerto ;
 
 
 	// Use this for initialization
@@ -20,8 +22,10 @@ public class Contrincante : MonoBehaviour {
 		navmes = gameObject.GetComponent <NavMeshAgent>();
 		player = GameObject.Find ("mummy_rig");
 		distancia = 2;
-		vidaContrincante = 50;
+		vidaContrincante = 20;
 		auxquitarvida = 0;
+		contadortiempomuerto = 1000;
+		siguientetiempomuerto = 1000;
 	}
 
 	// Update is called once per frame
@@ -29,7 +33,7 @@ public class Contrincante : MonoBehaviour {
 		//Animacion
 		animAdmin ();
 		if (estado != 3) {
-			if (navmes.SetDestination (player.transform.position)) {
+		if (navmes.SetDestination (player.transform.position)) {
 				float aux = Vector3.Distance (player.transform.position, gameObject.transform.position);
 				if (distancia > aux) {
 					estado = 2;
@@ -46,7 +50,19 @@ public class Contrincante : MonoBehaviour {
 			}
 			if (vidaContrincante <= 0) {
 				estado = 3;
+				player.GetComponent <PlayerMovement> ().AumentarContrincanteMuerto ();
 				player.GetComponent <PlayerMovement> ().PonerVida ();
+			}
+		}
+		if (estado == 3) {
+			contadortiempomuerto--;
+			if (contadortiempomuerto <= 0) {
+				estado = 0;
+				if (siguientetiempomuerto >= 100)
+					siguientetiempomuerto -= 100;
+				contadortiempomuerto = siguientetiempomuerto;
+				player.GetComponent <PlayerMovement> ().QuitarContrincanteMuerto ();
+				vidaContrincante = 20;
 			}
 		}
 	}
@@ -56,6 +72,7 @@ public class Contrincante : MonoBehaviour {
 			animcontr.SetBool ("WalkC", false);
 			animcontr.SetBool ("WaitC", true);
 			animcontr.SetBool ("AtackC", false);
+			animcontr.SetBool ("DieC", false);
 		} else if (estado == 1) {
 			animcontr.SetBool ("WalkC", true);
 			animcontr.SetBool ("WaitC", false);

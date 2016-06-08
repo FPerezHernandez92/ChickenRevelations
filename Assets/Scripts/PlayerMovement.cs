@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour {
 	private float distancia;
 	public int auxquitarvidaC;
 	public Contrincante contrin1;
+	public Contrincante contrinanterior;
+	public int contador_muertos;
+	public int num_contrincantes_restantes;
 
 	void Start(){
 		//Manejo del personaje
@@ -32,12 +35,22 @@ public class PlayerMovement : MonoBehaviour {
 		distancia = 1;
 		auxquitarvidaC = 0;
 		teclapulsada = false;
+		contador_muertos = 0;
+		contrinanterior = null;
+		num_contrincantes_restantes = 4;
 	}
 
 
 	// Update is called once per frame
 	void FixedUpdate () {
 		setTextVida ();
+		if (num_contrincantes_restantes != 0) {
+			setTextContrincante ();
+		}
+		else{
+			GameObject.Find("TextContrincante").GetComponent<Text>().text = ("VE A LA CUEVA");
+
+		}
 		
 		Vector3 movement = Vector3.zero;
 		//Solo si se encuentra en el suelo, sino se le aplica gravedad
@@ -50,10 +63,8 @@ public class PlayerMovement : MonoBehaviour {
 		animAdmin();
 		ccontroller.Move(movement * Time.deltaTime); 
 		if (Input.GetKeyDown ("e")) { 
-			print ("teclapulsada");
 			teclapulsada = true;
 		} else {
-			print ("ya no esta pulsada");
 			teclapulsada = false;
 		}
 		if (atacar && contador_tiempo > 50) {
@@ -61,16 +72,23 @@ public class PlayerMovement : MonoBehaviour {
 			contador_tiempo = 0;
 		}
 
-		float aux = Vector3.Distance (contr1.transform.position, gameObject.transform.position);
+		float aux = Vector3.Distance (contrin1.transform.position, gameObject.transform.position);
 		if (distancia > aux && atacar && teclapulsada) {
 			//if (auxquitarvidaC == 7) {
-				contr1.GetComponent <Contrincante> ().QuitarVidaContr ();
-				int auxvida = contr1.GetComponent <Contrincante> ().GetVidaContr ();
-				print ("VIDA contr " + auxvida);
-				auxquitarvidaC = 0;
+			//contr1.GetComponent <Contrincante> ().QuitarVidaContr ();
+			contrin1.QuitarVidaContr();
+			int auxvida;
+			auxvida = contrin1.GetVidaContr ();
+			//auxvida = contr1.GetComponent <Contrincante> ().GetVidaContr ();
+			//if (auxvida >= 0)
+				//print ("VIDA contr " + auxvida);
+			auxquitarvidaC = 0;
 			//} 
 			auxquitarvidaC++;
 		}
+
+		if (num_contrincantes_restantes == 0)
+			print("Corre a por el tesoro");
 
 	}
 
@@ -85,8 +103,7 @@ public class PlayerMovement : MonoBehaviour {
 			} 
 			print ("Voy a mas mas ");
 			auxquitarvidaC++;*/
-
-			//contrin1 = collider.gameObject.GetComponent <Contrincante> ();
+			contrin1 = collider.gameObject.GetComponent <Contrincante> ();
 			atacar = true;
 		}
 	}
@@ -149,5 +166,18 @@ public class PlayerMovement : MonoBehaviour {
 	public void setTextVida(){
 		GameObject.Find("TextVida").GetComponent<Text>().text = vidaPersonaje.ToString();
 
+	}
+
+	public void setTextContrincante(){
+		GameObject.Find("TextContrincante").GetComponent<Text>().text = ("Restantes: " + num_contrincantes_restantes.ToString());
+
+	}
+
+	public void AumentarContrincanteMuerto(){
+		num_contrincantes_restantes--;
+	}
+
+	public void QuitarContrincanteMuerto(){
+		num_contrincantes_restantes++;
 	}
 }
