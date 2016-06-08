@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour {
 		teclapulsada = false;
 		contador_muertos = 0;
 		contrinanterior = null;
-		num_contrincantes_restantes = 4;
+		num_contrincantes_restantes = 8;
 	}
 
 
@@ -72,19 +72,21 @@ public class PlayerMovement : MonoBehaviour {
 			contador_tiempo = 0;
 		}
 
-		float aux = Vector3.Distance (contrin1.transform.position, gameObject.transform.position);
-		if (distancia > aux && atacar && teclapulsada) {
-			//if (auxquitarvidaC == 7) {
-			//contr1.GetComponent <Contrincante> ().QuitarVidaContr ();
-			contrin1.QuitarVidaContr();
-			int auxvida;
-			auxvida = contrin1.GetVidaContr ();
-			//auxvida = contr1.GetComponent <Contrincante> ().GetVidaContr ();
-			//if (auxvida >= 0)
+		if (contrin1 != null) {
+			float aux = Vector3.Distance (contrin1.transform.position, gameObject.transform.position);
+			if (distancia > aux && atacar && teclapulsada) {
+				//if (auxquitarvidaC == 7) {
+				//contr1.GetComponent <Contrincante> ().QuitarVidaContr ();
+				contrin1.QuitarVidaContr ();
+				int auxvida;
+				auxvida = contrin1.GetVidaContr ();
+				//auxvida = contr1.GetComponent <Contrincante> ().GetVidaContr ();
+				//if (auxvida >= 0)
 				//print ("VIDA contr " + auxvida);
-			auxquitarvidaC = 0;
-			//} 
-			auxquitarvidaC++;
+				auxquitarvidaC = 0;
+				//} 
+				auxquitarvidaC++;
+			}
 		}
 
 		if (num_contrincantes_restantes == 0)

@@ -24,8 +24,8 @@ public class Contrincante : MonoBehaviour {
 		distancia = 2;
 		vidaContrincante = 20;
 		auxquitarvida = 0;
-		contadortiempomuerto = 1000;
-		siguientetiempomuerto = 1000;
+		contadortiempomuerto = 1500;
+		siguientetiempomuerto = 1500;
 	}
 
 	// Update is called once per frame
