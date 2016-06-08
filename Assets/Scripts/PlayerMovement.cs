@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour {
 	public Contrincante contrinanterior;
 	public int contador_muertos;
 	public int num_contrincantes_restantes;
+	public bool hasganado;
 
 	void Start(){
 		//Manejo del personaje
@@ -38,61 +39,63 @@ public class PlayerMovement : MonoBehaviour {
 		contador_muertos = 0;
 		contrinanterior = null;
 		num_contrincantes_restantes = 8;
+		hasganado = false;
 	}
 
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		setTextVida ();
-		if (num_contrincantes_restantes != 0) {
-			setTextContrincante ();
-		}
-		else{
-			GameObject.Find("TextContrincante").GetComponent<Text>().text = ("VE A LA CUEVA");
+		if (!hasganado) {
+			setTextVida ();
+			if (num_contrincantes_restantes != 0) {
+				setTextContrincante ();
+			} else {
+				GameObject.Find ("TextContrincante").GetComponent<Text> ().text = ("VE A LA CUEVA");
 
-		}
-		
-		Vector3 movement = Vector3.zero;
-		//Solo si se encuentra en el suelo, sino se le aplica gravedad
-		if(ccontroller.isGrounded){
-			movement = keyboardController();
-		}
-		//Gravedad
-		movement.y -= gravity * Time.deltaTime * 10;
-		//Animacion
-		animAdmin();
-		ccontroller.Move(movement * Time.deltaTime); 
-		if (Input.GetKeyDown ("e")) { 
-			teclapulsada = true;
-		} else {
-			teclapulsada = false;
-		}
-		if (atacar && contador_tiempo > 50) {
-			atacar = false;
-			contador_tiempo = 0;
-		}
-
-		if (contrin1 != null) {
-			float aux = Vector3.Distance (contrin1.transform.position, gameObject.transform.position);
-			if (distancia > aux && atacar && teclapulsada) {
-				//if (auxquitarvidaC == 7) {
-				//contr1.GetComponent <Contrincante> ().QuitarVidaContr ();
-				contrin1.QuitarVidaContr ();
-				int auxvida;
-				auxvida = contrin1.GetVidaContr ();
-				//auxvida = contr1.GetComponent <Contrincante> ().GetVidaContr ();
-				//if (auxvida >= 0)
-				//print ("VIDA contr " + auxvida);
-				auxquitarvidaC = 0;
-				//} 
-				auxquitarvidaC++;
 			}
+		
+			Vector3 movement = Vector3.zero;
+			//Solo si se encuentra en el suelo, sino se le aplica gravedad
+			if (ccontroller.isGrounded) {
+				movement = keyboardController ();
+			}
+			//Gravedad
+			movement.y -= gravity * Time.deltaTime * 10;
+			//Animacion
+			animAdmin ();
+			ccontroller.Move (movement * Time.deltaTime); 
+			if (Input.GetKeyDown ("e")) { 
+				teclapulsada = true;
+			} else {
+				teclapulsada = false;
+			}
+			if (atacar && contador_tiempo > 50) {
+				atacar = false;
+				contador_tiempo = 0;
+			}
+
+			if (contrin1 != null) {
+				float aux = Vector3.Distance (contrin1.transform.position, gameObject.transform.position);
+				if (distancia > aux && atacar && teclapulsada) {
+					//if (auxquitarvidaC == 7) {
+					//contr1.GetComponent <Contrincante> ().QuitarVidaContr ();
+					contrin1.QuitarVidaContr ();
+					int auxvida;
+					auxvida = contrin1.GetVidaContr ();
+					//auxvida = contr1.GetComponent <Contrincante> ().GetVidaContr ();
+					//if (auxvida >= 0)
+					//print ("VIDA contr " + auxvida);
+					auxquitarvidaC = 0;
+					//} 
+					auxquitarvidaC++;
+				}
+			}
+
+			if (num_contrincantes_restantes == 0)
+				print ("Corre a por el tesoro");
 		}
-
-		if (num_contrincantes_restantes == 0)
-			print("Corre a por el tesoro");
-
 	}
+
 
 	void OnTriggerEnter( Collider collider){
 		if (collider.gameObject.tag == "zombieE") {
@@ -107,6 +110,12 @@ public class PlayerMovement : MonoBehaviour {
 			auxquitarvidaC++;*/
 			contrin1 = collider.gameObject.GetComponent <Contrincante> ();
 			atacar = true;
+		}
+		if ((collider.gameObject.tag == "Finish") && (num_contrincantes_restantes == 0)) {
+			GameObject.Find("TextContrincante").GetComponent<Text>().text = ("HAS GANADO");
+			print ("has ganado");
+			hasganado = true;
+			contrin1.SetContadorTiempoMuerto ();
 		}
 	}
 	void OnTriggerExit( Collider collider){

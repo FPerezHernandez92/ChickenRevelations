@@ -96,4 +96,8 @@ public class Contrincante : MonoBehaviour {
 	public int GetVidaContr(){
 		return vidaContrincante;
 	}
+
+	public void SetContadorTiempoMuerto(){
+		contadortiempomuerto = 200000;
+	}
 }
