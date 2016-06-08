@@ -36,7 +36,6 @@ public class Contrincante : MonoBehaviour {
 					if (auxquitarvida == 10) {
 						player.GetComponent <PlayerMovement> ().QuitarVida ();
 						int auxvida = player.GetComponent <PlayerMovement> ().GetVida ();
-						print ("VIDA " + auxvida);
 						auxquitarvida = 0;
 					}
 					auxquitarvida++;
