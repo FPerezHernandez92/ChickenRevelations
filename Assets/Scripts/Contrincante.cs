@@ -7,7 +7,7 @@ public class Contrincante : MonoBehaviour {
 	private Animator animcontr;
 	private NavMeshAgent navmes;
 	private GameObject player;
-	private float distancia;
+	private double distancia;
 	public int vidaContrincante;
 	public int auxquitarvida;
 	public int contadortiempomuerto;
@@ -21,49 +21,53 @@ public class Contrincante : MonoBehaviour {
 		animcontr.SetBool ("WaitC", true);
 		navmes = gameObject.GetComponent <NavMeshAgent>();
 		player = GameObject.Find ("mummy_rig");
-		distancia = 2;
+		distancia = 1.5;
 		vidaContrincante = 20;
 		auxquitarvida = 0;
-		contadortiempomuerto = 1500;
-		siguientetiempomuerto = 1500;
+		contadortiempomuerto = 1000;
+		siguientetiempomuerto = 200;
 	}
 
 	// Update is called once per frame
 	void Update () {
 		//Animacion
 		animAdmin ();
-		if (estado != 3) {
-		if (navmes.SetDestination (player.transform.position)) {
-				float aux = Vector3.Distance (player.transform.position, gameObject.transform.position);
-				if (distancia > aux) {
-					estado = 2;
-					if (auxquitarvida == 10) {
-						player.GetComponent <PlayerMovement> ().QuitarVida ();
-						int auxvida = player.GetComponent <PlayerMovement> ().GetVida ();
-						auxquitarvida = 0;
-					}
-					auxquitarvida++;
-				} else {
-					estado = 1;
+		if (!(player.GetComponent <PlayerMovement> ().estaElPersonajeMuerto ())) {
+			if (estado != 3) {
+				if (navmes.SetDestination (player.transform.position)) {
+					float aux = Vector3.Distance (player.transform.position, gameObject.transform.position);
+					if (distancia > aux) {
+						estado = 2;
+						if (auxquitarvida == 10) {
+							player.GetComponent <PlayerMovement> ().QuitarVida ();
+							int auxvida = player.GetComponent <PlayerMovement> ().GetVida ();
+							auxquitarvida = 0;
+						}
+						auxquitarvida++;
+					} else {
+						estado = 1;
 			
+					}
+				}
+				if (vidaContrincante <= 0) {
+					estado = 3;
+					player.GetComponent <PlayerMovement> ().AumentarContrincanteMuerto ();
+					player.GetComponent <PlayerMovement> ().PonerVida ();
 				}
 			}
-			if (vidaContrincante <= 0) {
-				estado = 3;
-				player.GetComponent <PlayerMovement> ().AumentarContrincanteMuerto ();
-				player.GetComponent <PlayerMovement> ().PonerVida ();
+			if (estado == 3) {
+				contadortiempomuerto--;
+				if (contadortiempomuerto <= 0) {
+					estado = 0;
+					if (siguientetiempomuerto >= 100)
+						siguientetiempomuerto -= 100;
+					contadortiempomuerto = siguientetiempomuerto;
+					player.GetComponent <PlayerMovement> ().QuitarContrincanteMuerto ();
+					vidaContrincante = 20;
+				}
 			}
-		}
-		if (estado == 3) {
-			contadortiempomuerto--;
-			if (contadortiempomuerto <= 0) {
-				estado = 0;
-				if (siguientetiempomuerto >= 100)
-					siguientetiempomuerto -= 100;
-				contadortiempomuerto = siguientetiempomuerto;
-				player.GetComponent <PlayerMovement> ().QuitarContrincanteMuerto ();
-				vidaContrincante = 20;
-			}
+		} else {
+			estado = 0;
 		}
 	}
 

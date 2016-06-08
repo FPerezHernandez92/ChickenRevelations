@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour {
 	public int contador_muertos;
 	public int num_contrincantes_restantes;
 	public bool hasganado;
+	public bool personajeMuerto;
 
 	void Start(){
 		//Manejo del personaje
@@ -40,12 +41,16 @@ public class PlayerMovement : MonoBehaviour {
 		contrinanterior = null;
 		num_contrincantes_restantes = 8;
 		hasganado = false;
+		personajeMuerto = false;
 	}
 
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (!hasganado) {
+		if (personajeMuerto)
+			GameObject.Find ("TextContrincante").GetComponent<Text> ().text = ("HAS PERDIDO");
+		
+		if (!personajeMuerto && !hasganado) {
 			setTextVida ();
 			if (num_contrincantes_restantes != 0) {
 				setTextContrincante ();
@@ -93,6 +98,14 @@ public class PlayerMovement : MonoBehaviour {
 
 			if (num_contrincantes_restantes == 0)
 				print ("Corre a por el tesoro");
+
+			if (vidaPersonaje == 0) {
+				anim.SetBool("Walk", false);
+				anim.SetBool("Run", false);
+				anim.SetBool ("Atack", false);
+				anim.SetBool ("Muerto", true);
+				personajeMuerto = true;
+			}
 		}
 	}
 
@@ -160,7 +173,8 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	public void QuitarVida(){
-		vidaPersonaje--;
+		if (vidaPersonaje > 0)
+			vidaPersonaje--;
 	}
 
 	public void PonerVida(){
@@ -190,5 +204,9 @@ public class PlayerMovement : MonoBehaviour {
 
 	public void QuitarContrincanteMuerto(){
 		num_contrincantes_restantes++;
+	}
+
+	public bool estaElPersonajeMuerto(){
+		return personajeMuerto;
 	}
 }
