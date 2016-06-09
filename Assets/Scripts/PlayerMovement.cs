@@ -13,12 +13,8 @@ public class PlayerMovement : MonoBehaviour {
 	bool teclapulsada;
 	private int contador_tiempo;
 	private NavMeshAgent navmes;
-	private GameObject contr1;
 	private float distancia;
-	public int auxquitarvidaC;
 	public Contrincante contrin1;
-	public Contrincante contrinanterior;
-	public int contador_muertos;
 	public int num_contrincantes_restantes;
 	public bool hasganado;
 	public bool personajeMuerto;
@@ -32,13 +28,8 @@ public class PlayerMovement : MonoBehaviour {
 		atacar = false;
 		contador_tiempo = 0;
 		navmes = gameObject.GetComponent <NavMeshAgent> ();
-		contr1 = GameObject.Find ("zombie anime");
-
 		distancia = 1;
-		auxquitarvidaC = 0;
 		teclapulsada = false;
-		contador_muertos = 0;
-		contrinanterior = null;
 		num_contrincantes_restantes = 8;
 		hasganado = false;
 		personajeMuerto = false;
@@ -82,22 +73,11 @@ public class PlayerMovement : MonoBehaviour {
 			if (contrin1 != null) {
 				float aux = Vector3.Distance (contrin1.transform.position, gameObject.transform.position);
 				if (distancia > aux && atacar && teclapulsada) {
-					//if (auxquitarvidaC == 7) {
-					//contr1.GetComponent <Contrincante> ().QuitarVidaContr ();
 					contrin1.QuitarVidaContr ();
 					int auxvida;
 					auxvida = contrin1.GetVidaContr ();
-					//auxvida = contr1.GetComponent <Contrincante> ().GetVidaContr ();
-					//if (auxvida >= 0)
-					//print ("VIDA contr " + auxvida);
-					auxquitarvidaC = 0;
-					//} 
-					auxquitarvidaC++;
 				}
 			}
-
-			if (num_contrincantes_restantes == 0)
-				print ("Corre a por el tesoro");
 
 			if (vidaPersonaje == 0) {
 				anim.SetBool("Walk", false);
@@ -112,25 +92,16 @@ public class PlayerMovement : MonoBehaviour {
 
 	void OnTriggerEnter( Collider collider){
 		if (collider.gameObject.tag == "zombieE") {
-			/*if (auxquitarvidaC >= 7) {
-				collider.gameObject.GetComponent <Contrincante> ().QuitarVidaContr ();
-				print ("ESTOY QUITANDO VIDA");
-				int auxvida = collider.gameObject.GetComponent <Contrincante> ().GetVidaContr ();
-				print ("VIDA contr " + auxvida);
-				auxquitarvidaC = 0;
-			} 
-			print ("Voy a mas mas ");
-			auxquitarvidaC++;*/
 			contrin1 = collider.gameObject.GetComponent <Contrincante> ();
 			atacar = true;
 		}
 		if ((collider.gameObject.tag == "Finish") && (num_contrincantes_restantes == 0)) {
 			GameObject.Find("TextContrincante").GetComponent<Text>().text = ("HAS GANADO");
-			print ("has ganado");
 			hasganado = true;
 			contrin1.SetContadorTiempoMuerto ();
 		}
 	}
+
 	void OnTriggerExit( Collider collider){
 		atacar = false;
 	}
@@ -168,8 +139,6 @@ public class PlayerMovement : MonoBehaviour {
 			anim.SetBool("Run", false);
 			anim.SetBool ("Atack", false);
 		}
-
-		//Debug.Log (anim);
 	}
 
 	public void QuitarVida(){
@@ -190,12 +159,10 @@ public class PlayerMovement : MonoBehaviour {
 
 	public void setTextVida(){
 		GameObject.Find("TextVida").GetComponent<Text>().text = vidaPersonaje.ToString();
-
 	}
 
 	public void setTextContrincante(){
 		GameObject.Find("TextContrincante").GetComponent<Text>().text = ("Restantes: " + num_contrincantes_restantes.ToString());
-
 	}
 
 	public void AumentarContrincanteMuerto(){

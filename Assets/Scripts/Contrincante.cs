@@ -12,6 +12,7 @@ public class Contrincante : MonoBehaviour {
 	public int auxquitarvida;
 	public int contadortiempomuerto;
 	public int siguientetiempomuerto ;
+	public int vidaContrincanteReset;
 
 
 	// Use this for initialization
@@ -24,8 +25,9 @@ public class Contrincante : MonoBehaviour {
 		distancia = 1.5;
 		vidaContrincante = 20;
 		auxquitarvida = 0;
-		contadortiempomuerto = 1000;
-		siguientetiempomuerto = 200;
+		contadortiempomuerto = 800;
+		siguientetiempomuerto = 800;
+		vidaContrincanteReset = 19;
 	}
 
 	// Update is called once per frame
@@ -60,10 +62,10 @@ public class Contrincante : MonoBehaviour {
 				if (contadortiempomuerto <= 0) {
 					estado = 0;
 					if (siguientetiempomuerto >= 100)
-						siguientetiempomuerto -= 100;
+						siguientetiempomuerto += 100;
 					contadortiempomuerto = siguientetiempomuerto;
 					player.GetComponent <PlayerMovement> ().QuitarContrincanteMuerto ();
-					vidaContrincante = 20;
+					vidaContrincante = vidaContrincanteReset--;
 				}
 			}
 		} else {

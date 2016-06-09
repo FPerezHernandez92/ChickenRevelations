@@ -20,18 +20,6 @@ public class CameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		//Si el personaje entra en el margen inferior
-		if(player.transform.position.z < margin){
-			if(offset2.x == offset3.x && offset2.y < offset3.y && offset2.z < offset3.z){
-				//offset2 += new Vector3(0, (float)0.4, (float)0.8);
-			}
-		}
-		else{
-			if(offset2 != offset){
-				//offset2 -= new Vector3(0, (float)0.8, (float)0.8);
-			}
-		}
 		transform.position = player.transform.position + offset2;
 		transform.LookAt(player.transform);
 	}
